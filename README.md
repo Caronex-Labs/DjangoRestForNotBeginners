@@ -4,4 +4,6 @@
 
 Find more details here: [Django Rest for NOT Beginners](https://medium.com/django-rest-for-not-beginners)
 
-This is the project repository for the contents of the publication.
+This is the reference repository for the contents of the publication.
+
+**This is not a functional project, it's just a reference**
