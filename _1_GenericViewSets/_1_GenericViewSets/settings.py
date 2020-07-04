@@ -39,6 +39,9 @@ INSTALLED_APPS = [
     # Rest Framework
     'rest_framework',
     'rest_framework.authtoken',
+
+    # Apps
+    'users_module'
 ]
 
 MIDDLEWARE = [
@@ -52,6 +55,9 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = '_1_GenericViewSets.urls'
+
+AUTH_USER_MODEL = 'users_module.User'
+
 
 TEMPLATES = [
     {
@@ -117,3 +123,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',  # <-- And here
+    ],
+}

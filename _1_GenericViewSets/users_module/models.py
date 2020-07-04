@@ -10,10 +10,10 @@ class User(AbstractUser):
     # I have mentioned them just so that there is no doubt.
 
     user_id = models.AutoField(primary_key=True)
-    username = models.CharField(max_length=100, required=True, unique=True)
-    email = models.EmailField(required=True, unique=True)
-    first_name = models.CharField(max_length=100, required=True)
-    last_name = models.CharField(max_length=100, required=True)
+    username = models.CharField(max_length=100, unique=True)
+    email = models.EmailField(unique=True)
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
 
     # The following fields are the custom fields.
 
