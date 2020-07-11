@@ -1,13 +1,12 @@
 # Create your views here.
+from rest_framework import status  # Import this for Status
 from rest_framework.decorators import action
-from rest_framework.mixins import ListModelMixin
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response  # Import this for Response
 from rest_framework.viewsets import GenericViewSet
-from rest_framework.response import Response # Import this for Response
-from rest_framework import status # Import this for Status
 
-from users_module.models import User
-from users_module.serializers import UserSerializer
+from users_module.models import User, Story
+from users_module.serializers import UserSerializer, StorySerializer
 
 
 # ARTICLE 1 : AN INTRODUCTION
@@ -55,15 +54,50 @@ from users_module.serializers import UserSerializer
 
 # ARTICLE 1 : CUSTOM ENDPOINTS
 
-class UserViewSet(GenericViewSet):
+# class MeMixin:
+#
+#     @action(methods=['get'], detail=False)
+#     def me(self, request):
+#         serializer = self.get_serializer_class()
+#         data = serializer(instance=self.mixin_config.me.instance, many=self.mixin_config.me.many).data
+#
+#         return Response(data, status=status.HTTP_200_OK)
+
+class MeMixin:
+
+    @action(methods=['get'], detail=False)
+    def me(self, request):
+        serializer = self.get_serializer_class()
+        data = serializer(
+            instance=self.get_me_config().get('instance'),
+            many=self.get_me_config().get('many')
+        ).data
+        return Response(data, status=status.HTTP_200_OK)
+
+
+class UserViewSet(MeMixin, GenericViewSet):
     serializer_class = UserSerializer
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         return User.objects.all()
 
-    @action(methods=['get'], detail=False)
-    def me(self, request):
-        serializer = self.get_serializer_class()
-        data = serializer(request.user).data
-        return Response(data, status=status.HTTP_200_OK)
+    def get_me_config(self):
+        return {
+            'instance': self.request.user,
+            'many': False
+        }
+
+
+class StoryViewSet(MeMixin, GenericViewSet):
+    serializer_class = StorySerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return Story.objects.all()
+
+    def get_me_config(self):
+        return {
+            'instance': self.request.user.stories,
+            'many': True
+        }

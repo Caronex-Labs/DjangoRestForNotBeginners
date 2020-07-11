@@ -5,7 +5,6 @@ from django.db import models
 # Create your models here.
 
 class User(AbstractUser):
-
     # The following fields are declared by Django by default.
     # I have mentioned them just so that there is no doubt.
 
@@ -24,3 +23,14 @@ class User(AbstractUser):
     profile_picture = models.URLField(blank=True)
 
 
+class Story(models.Model):
+    class Meta:
+        verbose_name_plural = "Stories"
+
+    story_id = models.AutoField(primary_key=True)
+    title = models.CharField(max_length=200)
+    subtitle = models.TextField()
+    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='stories')
+    date_published = models.DateField()
+    reading_duration = models.IntegerField()
+    thumbnail = models.URLField()
