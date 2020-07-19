@@ -21,7 +21,7 @@ from users_module.views import UserViewSet
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('users/me', UserViewSet.as_view({'get': 'me'}), name="user_view_set"),
-    path('api-token-auth/', obtain_auth_token, name='api_token_auth'),  # <-- And here
+    path('users/me', UserViewSet.as_view({'get': 'me', 'patch': 'me'}), name="user_view_set"),
+    path('api-token-auth/', obtain_auth_token, name='api_token_auth'),
 
 ]

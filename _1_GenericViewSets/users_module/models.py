@@ -21,6 +21,7 @@ class User(AbstractUser):
     following = models.IntegerField(default=0)
     articles = models.IntegerField(default=0)
     profile_picture = models.URLField(blank=True)
+    last_edited = models.DateTimeField(auto_now=True)
 
 
 class Story(models.Model):

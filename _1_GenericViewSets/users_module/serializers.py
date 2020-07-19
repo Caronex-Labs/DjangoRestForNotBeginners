@@ -7,6 +7,7 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         exclude = ['password']
+        read_only_fields = ['user_id', 'email', 'first_name', 'last_name', 'following', 'articles', 'last_edited']
 
 
 class StorySerializer(serializers.ModelSerializer):
